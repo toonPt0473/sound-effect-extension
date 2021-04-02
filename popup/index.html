@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>DJ Sound</title>
+  <style>
+    html {
+      background-color: #45484d;
+      width: 430px;
+      height: auto;
+    }
+    .mixer {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .channel {
+      background-color: #484f55; 
+      border-right: 0.1rem solid rgba(0,0,0,0.4);
+      box-shadow: inset -0.1rem 0 0.2rem rgba(0,0,0,0.3);
+      position: relative;
+      width: 100px;
+      text-align: center;
+    }
+    button {
+      background: rgba(0, 54, 77,0.5);
+      border-radius: 0.15rem;
+      box-shadow: 
+        0 0.2rem 0.3rem rgba(0,0,0,0.4),
+        inset 0 0.3rem 0.4rem -0.1rem rgba(255,255,255,0.5),
+        inset 0 -0.3rem 0.4rem -0.1rem rgba(0,0,0,0.5);
+      cursor: pointer;
+      height: 30px;
+      width: 30px; 
+    }
+    
+    button.active {
+      background: #39b0f9; 
+      box-shadow: 
+        0 0.2rem 0.3rem rgba(0,0,0,0.25),
+        0 0 0.2rem rgba(255,255,255,0.5),
+        0 0 0.8rem #48c4fa,
+        0 0 1.3rem #48c4fa,
+        inset 0 0.3rem 0.4rem -0.1rem rgba(255,255,255,0.5),
+        inset 0 -0.3rem 0.4rem -0.1rem rgba(0,0,0,0.4);
+    }
+    #stop-btn {
+      width: 100px;
+      color: white;
+      font-size: 18px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="mixer" id="mixer">
+  </div>
+  <form style="margin: 20px" >
+    <label for="vol">Volume (between 1 and 10):</label>
+    <input type="range" id="vol" value="3" name="vol" min="1" max="10">
+  </form>
+  <div style="text-align: center; margin: 20px">
+    <button id="stop-btn">Stop</button>
+  </div>
+  <script src="index.js"></script>
+</body>
+</html>
