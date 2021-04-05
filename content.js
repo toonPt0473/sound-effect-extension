@@ -1,33 +1,32 @@
 let vol = 0.3
 var currentPlay = []
+let presounds = []
 
-const play = (sound) => {
-  const audio = new Audio(sound);
-  audio.onloadedmetadata = () => {
-    audio.volume = vol
-    audio.play()
-    const id = Date.now()
-    currentPlay.push({
-      audio,
-      uid: id
-    })
-    if (audio.duration) {
-      setTimeout(() => {
-        currentPlay = currentPlay.filter(i => i.uid !== id)
-      }, audio.duration * 1000);
-    }
+const play = (src) => {
+  const player = presounds.find(i => i.src === src)
+  player.volume = vol
+  player.play()
+  const id = Date.now()
+  currentPlay.push({
+    player,
+    uid: id
+  })
+  if (player.duration) {
+    setTimeout(() => {
+      currentPlay = currentPlay.filter((i) => i.uid !== id)
+    }, (player.duration + 100) * 1000)
   }
 }
 
 const stopAll = () => {
-  currentPlay.forEach(i => {
-    i.audio.pause();
-    i.audio.currentTime = 0;
+  currentPlay.forEach((i) => {
+    i.player.pause()
+    i.player.currentTime = 0
   })
   currentPlay = []
 }
 const changeVol = (vol) => {
-  currentPlay.forEach(i => i.audio.volume = vol)
+  currentPlay.forEach((i) => (i.player.volume = vol))
 }
 
 function gotMessage(message, sender, sendResponse) {
@@ -43,4 +42,24 @@ function gotMessage(message, sender, sendResponse) {
   }
 }
 
+function init() {
+  chrome.storage.local.get(['sounds'], function (result) {
+    const checkLoad = ((result.sounds) || [])
+      .filter((i) => i.isUse)
+      .map((audio) => {
+        const player = new Audio(audio.sound)
+        player.load()
+        presounds.push(player)
+        return new Promise((resolve) => {
+          player.addEventListener('canplay', resolve);
+        })
+      })
+    
+    Promise.all(checkLoad).then(() => {
+      chrome.storage.local.set({ loading: false })
+    })
+  })
+}
+
 chrome.runtime.onMessage.addListener(gotMessage)
+init()

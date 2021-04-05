@@ -15,12 +15,15 @@
       align-items: center;
       flex-wrap: wrap;
     }
+    .hide {
+      display: none !Important;
+    }
     .channel {
       background-color: #484f55; 
       border-right: 0.1rem solid rgba(0,0,0,0.4);
       box-shadow: inset -0.1rem 0 0.2rem rgba(0,0,0,0.3);
       position: relative;
-      width: 100px;
+      width: 80px;
       text-align: center;
     }
     button {
@@ -50,18 +53,64 @@
       color: white;
       font-size: 18px;
     }
+    .lds-ripple {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+    .lds-ripple div {
+      position: absolute;
+      border: 4px solid #fff;
+      opacity: 1;
+      border-radius: 50%;
+      animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    }
+    .lds-ripple div:nth-child(2) {
+      animation-delay: -0.5s;
+    }
+    @keyframes lds-ripple {
+      0% {
+        top: 36px;
+        left: 36px;
+        width: 0;
+        height: 0;
+        opacity: 1;
+      }
+      100% {
+        top: 0px;
+        left: 0px;
+        width: 72px;
+        height: 72px;
+        opacity: 0;
+      }
+    }
+    .load-container {
+      width: 100%;
+      margin-top: 100px;
+      margin-bottom: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
   </style>
 </head>
 <body>
-  <div class="mixer" id="mixer">
+  <div class="load-container hide" id="loading">
+    <div class="lds-ripple"><div></div><div></div></div>
   </div>
-  <form style="margin: 20px" >
-    <label for="vol">Volume (between 1 and 10):</label>
-    <input type="range" id="vol" value="3" name="vol" min="1" max="10">
-  </form>
-  <div style="text-align: center; margin: 20px">
-    <button id="stop-btn">Stop</button>
+  <div id="container" >
+    <div class="mixer" id="mixer">
+    </div>
+    <form style="margin: 20px" >
+      <label for="vol">Volume (between 1 and 10):</label>
+      <input type="range" id="vol" value="3" name="vol" min="1" max="10">
+    </form>
+    <div style="text-align: center; margin: 20px">
+      <button id="stop-btn">Stop</button>
+    </div>
+    <a href="select.html">hello world</a>
   </div>
   <script src="index.js"></script>
 </body>
